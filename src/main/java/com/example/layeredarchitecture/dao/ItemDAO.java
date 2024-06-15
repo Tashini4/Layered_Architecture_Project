@@ -20,5 +20,6 @@ public interface ItemDAO {
     public ArrayList<ItemDTO> allItemId() throws SQLException, ClassNotFoundException ;
 
     boolean Update1(ItemDTO itemDTO)throws SQLException,ClassNotFoundException;
+    public ItemDTO findItem(String code) throws SQLException, ClassNotFoundException ;
 }
 

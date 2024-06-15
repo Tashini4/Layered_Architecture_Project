@@ -366,7 +366,7 @@ public class PlaceOrderFormController {
 //                //Search & Update Item
                 ItemDTO item = findItem(detailDTO.getItemCode());
                 item.setQtyOnHand(item.getQtyOnHand() - detailDTO.getQty());
-                ItemDAO itemDAO = new ItemDAOImpl();
+                //ItemDAO itemDAO = new ItemDAOImpl();
                 if (!(itemDAO.Update1(new ItemDTO(item.getCode(),item.getDescription(),item.getUnitPrice(),item.getQtyOnHand())))) {
                     connection.rollback();
                     connection.setAutoCommit(true);
@@ -388,13 +388,9 @@ public class PlaceOrderFormController {
     }
 
 
-
-
-
-
     public ItemDTO findItem(String code) throws SQLException, ClassNotFoundException {
         try {
-            ItemDAOImpl itemDAO = new ItemDAOImpl();
+           // ItemDAO itemDAO = new ItemDAOImpl();
             ArrayList<ItemDTO> item1 = itemDAO.findItem(code);
             for (ItemDTO it : item1){
                 return new ItemDTO(code,it.getDescription(),it.getUnitPrice(),it.getQtyOnHand());
