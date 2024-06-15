@@ -54,7 +54,8 @@ public class PlaceOrderFormController {
     private String orderId;
 
     ItemDAO itemDAO = new ItemDAOImpl();
-
+    CustomerDAO customerDAO = new CustomerDAOImpl();
+    OrderDAO orderDAO = new OrderDAOImpl();
     public void initialize() throws SQLException, ClassNotFoundException {
 
         tblOrderDetails.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -190,7 +191,7 @@ public class PlaceOrderFormController {
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
 
-        ItemDAOImpl itemDAO = new ItemDAOImpl();
+        //ItemDAO itemDAO = new ItemDAOImpl();
         return itemDAO.existItems(code);
 
 
@@ -199,7 +200,7 @@ public class PlaceOrderFormController {
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
 
 
-        CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+       // CustomerDAO customerDAO = new CustomerDAOImpl();
         return customerDAO.existCustomers(id);
 
     }
@@ -207,7 +208,7 @@ public class PlaceOrderFormController {
     public String generateNewOrderId() {
         try {
 
-            OrderDAOImpl orderDAO = new OrderDAOImpl();
+           // OrderDAO orderDAO = new OrderDAOImpl();
             String id = orderDAO.nextId();
             return id;
 
@@ -222,7 +223,7 @@ public class PlaceOrderFormController {
     private void loadAllCustomerIds() {
         try {
 
-            CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+           // CustomerDAO customerDAO = new CustomerDAOImpl();
             ArrayList<CustomerDTO> allCustomers = customerDAO.allCustomerId();
             for (CustomerDTO customerDTO : allCustomers){
                 cmbCustomerId.getItems().add(customerDTO.getId());
@@ -238,7 +239,7 @@ public class PlaceOrderFormController {
         try {
 
 
-            ItemDAOImpl itemDAO = new ItemDAOImpl();
+            //ItemDAO itemDAO = new ItemDAOImpl();
             ArrayList<ItemDTO> allItems =itemDAO.allItemId();
             for (ItemDTO itemDTO : allItems){
                 cmbItemCode.getItems().add(itemDTO.getCode());
