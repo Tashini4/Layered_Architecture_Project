@@ -372,7 +372,6 @@ public class PlaceOrderFormController {
                     connection.setAutoCommit(true);
                     return false;
                 }
-
             }
 
             connection.commit();
@@ -393,8 +392,7 @@ public class PlaceOrderFormController {
            // ItemDAO itemDAO = new ItemDAOImpl();
            return itemDAO.findItem(code);
 
-
-            } catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException("Failed to find the Item " + code, e);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
