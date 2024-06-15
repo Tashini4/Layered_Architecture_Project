@@ -343,13 +343,13 @@ public class PlaceOrderFormController {
             Connection connection = DBConnection.getDbConnection().getConnection();
 
            //if order id already exist
-            if (OrderDAOImpl.existOrder(orderId)){
+            if (orderDAO.existOrder(orderId)){
 
             }
 
             connection.setAutoCommit(false);
 
-            if (!(OrderDAOImpl.saveOrder(new OrderDTO(orderId,orderDate,customerId)))){
+            if (!(orderDAO.saveOrder(new OrderDTO(orderId,orderDate,customerId)))){
                 connection.rollback();
                 connection.setAutoCommit(true);
                 return false;

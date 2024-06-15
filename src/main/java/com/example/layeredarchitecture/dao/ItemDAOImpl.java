@@ -99,11 +99,11 @@ public class ItemDAOImpl implements ItemDAO {
 
     }
 
-    @Override
+   /* @Override
     public boolean Update(ItemDTO itemDTO) throws SQLException, ClassNotFoundException {
         return false;
-    }
-
+    }*/
+@Override
     public ArrayList<ItemDTO> findItem(String code) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Item WHERE code=?");
@@ -120,6 +120,7 @@ public class ItemDAOImpl implements ItemDAO {
         }
         return arrayList;
     }
+    @Override
     public boolean Update1(ItemDTO item) throws SQLException, ClassNotFoundException {
         PreparedStatement pstm = DBConnection.getDbConnection().getConnection().
                 prepareStatement("UPDATE Item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?");
