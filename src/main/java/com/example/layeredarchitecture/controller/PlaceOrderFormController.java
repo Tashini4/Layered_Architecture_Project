@@ -391,10 +391,8 @@ public class PlaceOrderFormController {
     public ItemDTO findItem(String code) throws SQLException, ClassNotFoundException {
         try {
            // ItemDAO itemDAO = new ItemDAOImpl();
-            ArrayList<ItemDTO> item1 = itemDAO.findItem(code);
-            for (ItemDTO it : item1){
-                return new ItemDTO(code,it.getDescription(),it.getUnitPrice(),it.getQtyOnHand());
-            }
+           return itemDAO.findItem(code);
+
 
             } catch (SQLException e) {
             throw new RuntimeException("Failed to find the Item " + code, e);

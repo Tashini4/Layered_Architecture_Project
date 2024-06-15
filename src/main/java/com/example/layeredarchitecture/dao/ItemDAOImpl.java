@@ -110,7 +110,7 @@ public class ItemDAOImpl implements ItemDAO {
         pstm.setString(1, code);
         ResultSet rst = pstm.executeQuery();
         rst.next();
-        return new ItemDTO(code,rst.getString("descriptiob"),rst.getBigDecimal("unitPrice"),rst.getInt("qtyOnHand"));
+        return new ItemDTO(code,rst.getString("description"),rst.getBigDecimal("unitPrice"),rst.getInt("qtyOnHand"));
     }
     @Override
     public boolean Update1(ItemDTO item) throws SQLException, ClassNotFoundException {
