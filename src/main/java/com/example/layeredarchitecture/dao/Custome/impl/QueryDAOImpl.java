@@ -8,9 +8,7 @@ import com.example.layeredarchitecture.dao.Custome.QueryDAO;
 public class QueryDAOImpl implements QueryDAO {
     @Override
     public void searchOrder() {
-        switch (){
-            case 1:
 
-        }
+
     }
 }
