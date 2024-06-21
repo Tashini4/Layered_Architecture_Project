@@ -9,16 +9,19 @@ import com.example.layeredarchitecture.dao.custom.OrderDetailsDAO;
 import com.example.layeredarchitecture.dao.custom.impl.CustomerDAOImpl;
 import com.example.layeredarchitecture.dao.custom.impl.ItemDAOImpl;
 import com.example.layeredarchitecture.dao.custom.impl.OrderDAOImpl;*/
+import com.example.layeredarchitecture.Entity.Customer;
+import com.example.layeredarchitecture.Entity.Item;
+import com.example.layeredarchitecture.Entity.Order;
+import com.example.layeredarchitecture.Entity.OrderDetail;
 import com.example.layeredarchitecture.dao.Custome.*;
-import com.example.layeredarchitecture.dao.Custome.impl.CustomerDAOImpl;
 import com.example.layeredarchitecture.dao.Custome.impl.ItemDAOImpl;
 import com.example.layeredarchitecture.dao.Custome.impl.OrderDAOImpl;
-import com.example.layeredarchitecture.dao.custom.impl.OrderDetailsDAOImpl;
+import com.example.layeredarchitecture.dao.DAOFactory;
 import com.example.layeredarchitecture.db.DBConnection;
-import com.example.layeredarchitecture.model.CustomerDTO;
-import com.example.layeredarchitecture.model.ItemDTO;
-import com.example.layeredarchitecture.model.OrderDTO;
-import com.example.layeredarchitecture.model.OrderDetailDTO;
+import com.example.layeredarchitecture.dtol.CustomerDTO;
+import com.example.layeredarchitecture.dtol.ItemDTO;
+import com.example.layeredarchitecture.dtol.OrderDTO;
+import com.example.layeredarchitecture.dtol.OrderDetailDTO;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -35,17 +38,20 @@ public class PurchaseOrderBOImpl implements PurchaseOrderBO {
     OrderDetailsDAO orderDetailsDAO = (OrderDetailsDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.ORDER_DETAIL);
 
 
+
     @Override
     public CustomerDTO searchCustomer(String id) throws SQLException, ClassNotFoundException {
         //CustomerDAO customerDAO = new CustomerDAOImpl();
-        return customerDAO.search(id);
+        Customer customer=  customerDAO.search(id);
+        return new CustomerDTO(customer.getId(),customer.getName(),customer.getAddress());
     }
 
 
     @Override
     public ItemDTO searchItem(String code) throws SQLException, ClassNotFoundException {
        // ItemDAO itemDAO = new ItemDAOImpl();
-        return itemDAO.search(code);
+        Item item = itemDAO.search(code);
+        return new ItemDTO(item.getCode(),item.getDescription(),item.getUnitPrice(),item.getQtyOnHand());
     }
 
     @Override
@@ -68,14 +74,26 @@ public class PurchaseOrderBOImpl implements PurchaseOrderBO {
 
     @Override
     public ArrayList<CustomerDTO> getAllCustomers() throws SQLException, ClassNotFoundException {
-      //  CustomerDAO customerDAO = new CustomerDAOImpl();
-       return customerDAO.getAll();
-    }
+        ArrayList<Customer> customers = customerDAO.getAll();
+        ArrayList<CustomerDTO> customerDTOS = new ArrayList<>();
+        for (Customer customer : customers) {
+            CustomerDTO customerDTO = new CustomerDTO(customer.getId(), customer.getName(), customer.getAddress());
+            customerDTOS.add(customerDTO);
+        }
+
+        return customerDTOS;
+}
 
     @Override
     public ArrayList<ItemDTO> getAllItems() throws SQLException, ClassNotFoundException {
-       // ItemDAO itemDAO = new ItemDAOImpl();
-        return itemDAO.getAll();
+        ArrayList<Item> items = itemDAO.getAll();
+        ArrayList<ItemDTO> itemDTOS = new ArrayList<>();
+        for (Item i : items){
+            ItemDTO itemDTO = new ItemDTO(i.getCode(),i.getDescription(),i.getUnitPrice(),i.getQtyOnHand());
+            itemDTOS.add(itemDTO);
+        }
+        //ItemDAO itemDAO = new ItemDAOImpl();
+        return itemDTOS;
     }
 
 
@@ -95,7 +113,7 @@ public class PurchaseOrderBOImpl implements PurchaseOrderBO {
 
             connection.setAutoCommit(false);
             //Save the Order to the order table
-            boolean b2 = orderDAO.add(new OrderDTO(orderId, orderDate, customerId));
+            boolean b2 = orderDAO.add(new Order(orderId, orderDate, customerId));
 
             if (!b2) {
                 connection.rollback();
@@ -118,7 +136,7 @@ public class PurchaseOrderBOImpl implements PurchaseOrderBO {
 
                 //update item
                 ItemDAO itemDAO = new ItemDAOImpl();
-                boolean b = itemDAO.update(new ItemDTO(item.getCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand()));
+                boolean b = itemDAO.update(new Item(item.getCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand()));
 
                 if (!b) {
                     connection.rollback();

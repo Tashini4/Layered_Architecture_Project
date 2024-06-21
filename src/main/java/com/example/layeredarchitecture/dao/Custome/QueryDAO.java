@@ -1,5 +1,9 @@
 package com.example.layeredarchitecture.dao.Custome;
 
-public interface QueryDAO {
-    void searchOrder();
+import com.example.layeredarchitecture.dao.SuperDAO;
+
+public interface QueryDAO extends SuperDAO {
+    //void searchOrder();
+
+
 }
